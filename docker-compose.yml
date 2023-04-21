@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=link-bio
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./database/data:/var/lib/mysql
+  server:
+    depends_on:
+      - db
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes: 
+      - ./server:/usr/app/server
+      - /usr/app/server/node_modules
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_NAME=link-bio
+      - DB_PORT=3306
+    ports: 
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - ./client:/usr/app/client
+  #     - /usr/app/client/node_modules
+  #   depends_on:
+  #     - server
+  #   ports:
+  #     - "3000:3000"
