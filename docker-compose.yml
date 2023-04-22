@@ -10,7 +10,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - ./database/data:/var/lib/mysql
+      - ./server/database/data:/var/lib/mysql
   server:
     depends_on:
       - db
@@ -21,7 +21,6 @@ services:
       - ./server:/usr/app/server
       - /usr/app/server/node_modules
     environment:
-      - NODE_ENV=development
       - DB_HOST=db
       - DB_USER=root
       - DB_PASSWORD=123456
