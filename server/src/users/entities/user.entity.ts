@@ -11,9 +11,9 @@ export class User {
   @Column()
   email: string;
 
-  // @Column()
-  // password: string;
+  @Column()
+  password: string;
 
-  // @Column()
-  // text: string;
+  @Column()
+  text: string;
 }
